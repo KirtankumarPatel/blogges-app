@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using BlogTemplate._1.Data;
+using Microsoft.AspNetCore.Authorization;
+
+namespace BlogTemplate._1.Controllers
+{
+    [Route("[controller]/[action]")]
+    public class AccountControllerModel : Controller
+    {
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ILogger _logger;
+
+        public AccountControllerModel(SignInManager<ApplicationUser> signInManager, ILogger<AccountControllerModel> logger)
+        {
+            _signInManager = signInManager;
+            _logger = logger;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+            return RedirectToPage("/Index");
+        }
+    }
+}

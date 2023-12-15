@@ -1,0 +1,21 @@
+@model List<NewsApp.Controllers.NewsArticle>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>News Headlines</title>
+</head>
+<body>
+    <h1>News Headlines</h1>
+
+    <ul>
+        @foreach (var article in Model)
+        {
+            <li>
+                <h3>@article.Title</h3>
+                <p>@article.Description</p>
+            </li>
+        }
+    </ul>
+</body>
+</html>
